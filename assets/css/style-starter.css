@@ -14216,15 +14216,15 @@ a.navbar-brand span.fa {
 }
 
 .ms--images .ms-slide:nth-child(1) .ms-slide__image {
-  background-image: url("../images/my2.jpg");
+  background-image: url("../images/good1.jpg");
 }
 
 .ms--images .ms-slide:nth-child(2) .ms-slide__image {
-  background-image: url("../images/my1.jpg");
+  background-image: url("../images/good0.jpg");
 }
 
 .ms--images .ms-slide:nth-child(3) .ms-slide__image {
-  background-image: url("../images/good.jpg");
+  background-image: url("../images/good2.jpg");
 }
 
 .ms--images .ms-slide:nth-child(4) .ms-slide__image {
