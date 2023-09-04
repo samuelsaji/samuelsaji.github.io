@@ -380,6 +380,7 @@ section {
   color: #122f57;
 }
 
+
 .facts .count-box a {
   font-weight: 600;
   display: block;
@@ -875,7 +876,7 @@ section {
 }
 
 .contact .php-email-form input, .contact .php-email-form textarea {
-  border-radius: 0;
+  border-radius: 15px;
   box-shadow: none;
   font-size: 14px;
 }
