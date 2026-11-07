@@ -1,722 +1,485 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta charset="utf-8">
+<title>Samuel Saji</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Notes and findings from building software for industry, written down for anyone it might help.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..600;1,8..60,400..500&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light;
+  --bg: #FAF8F5; --fg: #201A16; --muted: #756A61; --line: #E6DFD8; --card: #F1EDE8; --accent: #4A2C1A; --accent-ink: #FFFFFF;
+  --sans: 'Plus Jakarta Sans', 'Helvetica Neue', Arial, sans-serif;
+  --read: 'Source Serif 4', Georgia, serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 14px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, p { margin: 0; }
+.col { max-width: 560px; margin: 0 auto; }
 
-  <title>Samuel | Freelance Webdesigner</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+/* nav */
+.nav { display: flex; justify-content: center; gap: 4px; padding-top: 28px; }
+.nav a { padding: 7px 12px; border-radius: 10px; color: var(--muted); font-size: 14px; }
+.nav a:hover { color: var(--fg); }
+.nav a[aria-current="page"] { background: var(--card); color: var(--fg); }
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon" type="img">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+main { padding: 48px 0 56px; }
+.stack { display: flex; flex-direction: column; gap: 56px; }
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+/* intro */
+.who { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; object-position: center; background: var(--card); }
+.who h1 { font-size: 16px; font-weight: 600; }
+.who .sub { color: var(--muted); }
+.intro p { color: var(--muted); font-size: 15px; line-height: 1.75; margin-bottom: 14px; }
+.intro p.small { font-size: 13px; line-height: 1.6; }
+.links { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; color: var(--muted); }
+.links a:hover { color: var(--fg); }
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
-  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+/* sections */
+.label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; color: var(--muted); font-weight: 500; }
+.label a:hover { color: var(--fg); }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.card { background: var(--card); border-radius: 16px; padding: 20px; display: block; }
+a.card:hover { background: #ECE6DF; }
+.card h3 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+.card .role { color: var(--muted); font-size: 12px; margin-bottom: 10px; }
+.card p { color: var(--muted); font-size: 13.5px; line-height: 1.65; }
 
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+/* writing */
+.item { display: grid; grid-template-columns: minmax(0, 1fr) 96px; gap: 8px 20px; align-items: center; padding: 4px 0 26px; }
+.item .art { width: 96px; height: 72px; color: var(--accent); justify-self: end; }
+.item .art svg { width: 100%; height: 100%; overflow: visible; }
+.item .art .f { fill: #E9E1D8; }
+.bob { animation: bob 3s ease-in-out infinite; }
+.bob2 { animation: bob 3s ease-in-out -1.2s infinite; }
+.sway { transform-origin: 48px 62px; animation: sway 3.4s ease-in-out infinite; }
+.slide { animation: slide 3.2s ease-in-out infinite; }
+.ping { animation: ping 2.4s ease-in-out infinite; }
+.write { stroke-dasharray: 40; animation: write 3s ease-in-out infinite; }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes sway { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes slide { 0%,100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
+@keyframes ping { 0%,100% { opacity: .25; } 50% { opacity: 1; } }
+@keyframes write { 0% { stroke-dashoffset: 40; } 60%,100% { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .item .art * { animation: none !important; } }
+@media (max-width: 420px) { .item { grid-template-columns: minmax(0, 1fr) 68px; } .item .art { width: 68px; height: 52px; } }
+.item .txt { min-width: 0; }
+.item h3 { font-size: 15.5px; font-weight: 600; letter-spacing: -0.005em; margin-bottom: 6px; }
+a.item:hover h3 { text-decoration: underline; text-underline-offset: 3px; }
+.item p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+.item .meta { color: var(--muted); font-size: 12px; margin-top: 8px; }
+.item .meta i { font-style: normal; margin: 0 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 28px; }
+.chip { font: inherit; font-size: 13px; cursor: pointer; color: var(--muted); background: transparent; border: 0; border-radius: 10px; padding: 6px 11px; }
+.chip:hover { color: var(--fg); }
+.chip[aria-pressed="true"] { background: var(--card); color: var(--fg); }
+.page-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+.page-lede { color: var(--muted); font-size: 15px; line-height: 1.75; margin-bottom: 28px; }
 
-  <!-- =======================================================
-  * Template Name: iPortfolio - v1.5.1
-  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+/* post */
+.back { color: var(--muted); display: inline-block; margin-bottom: 28px; }
+.back:hover { color: var(--fg); }
+.post h1 { font-size: 26px; line-height: 1.2; font-weight: 650; letter-spacing: -0.02em; margin-bottom: 10px; }
+.post .meta { color: var(--muted); font-size: 12px; margin-bottom: 28px; }
+.post .body p { font-family: var(--read); font-size: 18px; line-height: 1.7; margin-bottom: 1.1em; }
+.post .lede { font-family: var(--read); font-style: italic; font-size: 18px; color: var(--muted); margin-bottom: 24px; }
+.more-posts { margin-top: 48px; }
+
+/* about */
+.prose p { color: var(--muted); font-size: 15px; line-height: 1.75; margin-bottom: 14px; }
+.prose h1 { font-size: 16px; font-weight: 600; margin-bottom: 14px; color: var(--fg); }
+
+/* newsletter */
+.side { margin-bottom: 48px; }
+.news { background: var(--card); border-radius: 16px; padding: 20px; }
+.news h2 { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+.news h2 svg { width: 16px; }
+.news .copy { color: var(--muted); font-size: 13.5px; line-height: 1.55; margin-bottom: 14px; }
+.news label { display: block; font-size: 12.5px; color: var(--muted); margin-bottom: 6px; }
+.news input[type=email] { width: 100%; font: inherit; font-size: 15px; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; margin-bottom: 8px; }
+.news input[type=email]:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.news button { width: 100%; font: inherit; font-size: 14.5px; font-weight: 500; cursor: pointer; color: var(--accent-ink); background: var(--accent); border: 0; border-radius: 10px; padding: 11px; }
+.news button:disabled { opacity: .6; cursor: default; }
+.news .fine { font-size: 12.5px; color: var(--muted); margin-top: 12px; }
+.news .msg { font-size: 13px; margin-top: 10px; }
+.news .msg a { text-decoration: underline; }
+
+/* admin */
+.adm h1 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+.adm .lede { color: var(--muted); margin-bottom: 22px; }
+.adm h2 { font-size: 13px; font-weight: 600; color: var(--muted); margin: 32px 0 12px; }
+.adm form { display: grid; gap: 12px; background: var(--card); border-radius: 16px; padding: 20px; }
+.adm label { display: grid; gap: 5px; font-size: 12.5px; color: var(--muted); }
+.adm input, .adm select, .adm textarea { font: inherit; font-size: 14.5px; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 11px; width: 100%; }
+.adm textarea { min-height: 220px; resize: vertical; line-height: 1.6; font-family: var(--read); font-size: 16px; }
+.adm .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.adm .btns { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.b { font: inherit; font-size: 13.5px; cursor: pointer; border-radius: 10px; padding: 9px 14px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+.b.p { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.b.d { color: #A3341F; }
+.b:disabled { opacity: .5; cursor: default; }
+.arow { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.arow .t { min-width: 0; flex: 1; }
+.arow .btns { flex-wrap: nowrap; flex: none; }
+.arow .t b { display: block; font-weight: 600; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.arow .t span { color: var(--muted); font-size: 12px; }
+.bar { position: sticky; bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--fg); color: var(--bg); border-radius: 12px; padding: 10px 12px 10px 16px; margin-top: 18px; }
+.bar .b { border: 0; }
+.bar[hidden] { display: none; }
+.adm .hint { color: var(--muted); font-size: 12.5px; margin-top: 8px; }
+.adm .subs { font-size: 13px; color: var(--muted); line-height: 1.8; word-break: break-all; }
+@media (max-width: 520px) { .adm .two { grid-template-columns: 1fr; } }
+
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 12.5px; }
+footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; }
+footer a:hover { color: var(--fg); }
+footer .fl { display: flex; gap: 16px; }
+
+@media (max-width: 520px) { .cards { grid-template-columns: 1fr; } }
+</style>
 </head>
-
 <body>
 
-  <!-- ======= Mobile nav toggle button ======= -->
-  <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
 
-  <!-- ======= Header ======= -->
-  <header id="header">
-    <div class="d-flex flex-column">
-
-      <div class="profile">
-        <img src="assets/img/dp.png" alt="" class="img-fluid rounded-circle">
-        <h1 class="text-light"><a href="index.html">Samuel Saji</a></h1>
-        <div class="social-links mt-3 text-center">
-          <a href="tel:+91 9544785564" class="twitter"><i class="icofont-phone" style="color: lawngreen;"></i></a>
-          <a href="https://wa.me/qr/ZQVDBZUS2QKJP1" class="instagram"><i class="icofont-brand-whatsapp" style="color: lawngreen;"></i></a>
-          <a href="#contact" class="facebook"><i class="icofont-envelope" style="color: steelblue;"></i></a>         
-          <a href="https://g.page/Samuel-Saji?share" class="google-plus"><i class="icofont-world" style="color: cadetblue;"></i></a>
-          <a href="https://www.linkedin.com/in/samuel-saji-b453aa1b0" class="linkedin"><i class="bx bxl-linkedin" style="color: cadetblue;"></i></a>
-        </div>
-      </div>
-      
-
-      <nav class="nav-menu">
-        <ul>
-          <li class="active"><a href="#hero"><i class="bx bx-home"></i> <span>Home</span></a></li>
-          <li><a href="#about"><i class="bx bx-user"></i> <span>About</span></a></li>
-          <!--<li><a href="#resume"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>-->
-          <li><a href="#portfolio"><i class="bx bx-book-content"></i> My Works </a></li>
-          <li><a href="#testimonials"><i class="bx bx-server"></i> Pricing</a></li>
-          <li><a href="#contact"><i class="bx bx-envelope"></i> Contact</a></li>
-
-        </ul>
-      </nav><!-- .nav-menu -->
-      <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
-
+<div class="col">
+  <nav class="nav" aria-label="Main">
+    <a href="#" data-nav="home">Home</a>
+    <a href="#writing" data-nav="writing">Writing</a>
+    <a href="#about" data-nav="about">About</a>
+  </nav>
+  <main id="app"></main>
+  <aside class="side" id="side"></aside>
+  <footer>
+    <div class="row">
+      <div>© 2026 Samuel Saji · Kochi, Kerala · Written by me, not AI.</div>
+      <div class="fl"><a href="#writing">Writing</a><a href="#about">About</a><a href="https://www.linkedin.com/in/samuel-saji/" target="_blank" rel="noopener">LinkedIn</a><a href="#admin" id="adminlink" style="display:none">Admin</a></div>
     </div>
-  </header><!-- End Header -->
+  </footer>
+</div>
 
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="hero d-flex flex-column justify-content-center align-items-center">
-    <div class="hero-container" data-aos="fade-in">
-      <h1>Samuel</h1>
-      <p>I'm <span class="typed" data-typed-items="Designer, Developer, Freelancer"></span></p>
-    </div>
-  </section><!-- End Hero -->
-
-  <main id="main">
-
-    <!-- ======= About Section ======= -->
-    <section id="about" class="about">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>About</h2>
-          <h5><p class="about-me">I Specialize in Web Desinging and Developing, and am passionate about creating Awesome Portfolio & Bussiness Website works.</p></h5>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-4" data-aos="fade-right">
-            <img src="assets/img/profile-img.jpg" class="img-fluid" sizes="3" alt="">
-          </div>
-          <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-            <h3>My Resume.</h3>
-            <p class="font-italic">
-              We craft websites that appeal to your target audience and elevate your brand reputation by projecting you as a reliable service provider.
-            </p>
-            <div class="row">
-              <div class="col-lg-6">
-                <ul>
-                 
-                  <li><i class="icofont-rounded-right"></i> <strong>Website:</strong> <a href="https://samuelsaji.github.io"> www.samuelsaji.github.io</a></li>
-                  <li><i class="icofont-rounded-right"></i> <strong>Phone:</strong> <a href="tel:9544785564"  style="color: #272829;"> +91 9544785564</a></li>
-                 
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul>
-                 
-                 
-                  <li><i class="icofont-rounded-right"></i> <strong>Email:</strong> kp.samuelsaji@gmail.com</li>
-                  <li><i class="icofont-rounded-right"></i> <strong>Freelance:</strong> Available</li>
-                </ul>
-              </div>
-            </div>
-            <p>A truly well designed website can turn into a strong marketing tool and enable you to 
-              differentiate from your competitors and making your business succeed .As a leading 
-              freelance web designer, we focus on merging innovative ideas and custom website design 
-              to achieve effective online results at affordable rates.</p>
-          </div>
-        </div>
-
-      </div>
-    </section><!-- End About Section -->
-
-    <!-- ======= Facts Section ======= 
-    <section id="facts" class="facts">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Facts</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-        </div>
-
-        <div class="row no-gutters">
-
-          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up">
-            <div class="count-box">
-              <i class="icofont-simple-smile"></i>
-              <span data-toggle="counter-up">232</span>
-              <p><strong>Happy Clients</strong> consequuntur quae</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up" data-aos-delay="100">
-            <div class="count-box">
-              <i class="icofont-document-folder"></i>
-              <span data-toggle="counter-up">521</span>
-              <p><strong>Projects</strong> adipisci atque cum quia aut</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up" data-aos-delay="200">
-            <div class="count-box">
-              <i class="icofont-live-support"></i>
-              <span data-toggle="counter-up">1,463</span>
-              <p><strong>Hours Of Support</strong> aut commodi quaerat</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up" data-aos-delay="300">
-            <div class="count-box">
-              <i class="icofont-users-alt-5"></i>
-              <span data-toggle="counter-up">15</span>
-              <p><strong>Hard Workers</strong> rerum asperiores dolor</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>-- End Facts Section -->
-
-    <!-- ======= Skills Section ======= -->
-    <section id="skills" class="skills section-bg">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Skills</h2>
-          <p>I am passionate web designer and developer, who ensure client satisfaction by offering world-class products and services. From web designing to its development and SEO implementation I offer you the best service to drive results.</p>
-        </div>
-
-        <div class="row skills-content">
-
-          <div class="col-lg-6" data-aos="fade-up">
-
-            <div class="progress">
-              <span class="skill">HTML <i class="val">100%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">CSS <i class="val">90%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">JavaScript <i class="val">80%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-
-            <div class="progress">
-              <span class="skill">Bootstrap4 <i class="val">90%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">WordPress/CMS <i class="val">90%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">Wix <i class="val">98%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Skills Section -->
-
-    <!-- ======= Rates Section ======= -->
-    <!--<section id="resume" class="resume">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Pricing</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-6" data-aos="fade-up">
-            <h3 class="resume-title">Sumary</h3>
-            <div class="resume-item pb-0">
-              <h4>Alex Smith</h4>
-              <p><em>Innovative and deadline-driven Graphic Designer with 3+ years of experience designing and developing user-centered digital/print marketing material from initial concept to final, polished deliverable.</em></p>
-              <ul>
-                <li>Portland par 127,Orlando, FL</li>
-                <li>(123) 456-7891</li>
-                <li>alice.barkley@example.com</li>
-              </ul>
-            </div>
-
-            <h3 class="resume-title">Education</h3>
-            <div class="resume-item">
-              <h4>Master of Fine Arts &amp; Graphic Design</h4>
-              <h5>2015 - 2016</h5>
-              <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-              <p>Qui deserunt veniam. Et sed aliquam labore tempore sed quisquam iusto autem sit. Ea vero voluptatum qui ut dignissimos deleniti nerada porti sand markend</p>
-            </div>
-            <div class="resume-item">
-              <h4>Bachelor of Fine Arts &amp; Graphic Design</h4>
-              <h5>2010 - 2014</h5>
-              <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-              <p>Quia nobis sequi est occaecati aut. Repudiandae et iusto quae reiciendis et quis Eius vel ratione eius unde vitae rerum voluptates asperiores voluptatem Earum molestiae consequatur neque etlon sader mart dila</p>
-            </div>
-          </div>
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="resume-title">Professional Experience</h3>
-            <div class="resume-item">
-              <h4>Senior graphic design specialist</h4>
-              <h5>2019 - Present</h5>
-              <p><em>Experion, New York, NY </em></p>
-              <ul>
-                <li>Lead in the design, development, and implementation of the graphic, layout, and production communication materials</li>
-                <li>Delegate tasks to the 7 members of the design team and provide counsel on all aspects of the project. </li>
-                <li>Supervise the assessment of all graphic materials in order to ensure quality and accuracy of the design</li>
-                <li>Oversee the efficient use of production project budgets ranging from $2,000 - $25,000</li>
-              </ul>
-            </div>
-            <div class="resume-item">
-              <h4>Graphic design specialist</h4>
-              <h5>2017 - 2018</h5>
-              <p><em>Stepping Stone Advertising, New York, NY</em></p>
-              <ul>
-                <li>Developed numerous marketing programs (logos, brochures,infographics, presentations, and advertisements).</li>
-                <li>Managed up to 5 projects or tasks at a given time while under pressure</li>
-                <li>Recommended and consulted with clients on the most appropriate graphic design</li>
-                <li>Created 4+ design presentations and proposals a month for clients and account managers</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-    End Resume Section -->
-
-    <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio section-bg">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Portfolio</h2>
-          
-          
-          <p>Recently I had accomplished web design's & front-end developments with extensive experience building websites using , HTML5, CSS3, JavaScript, Bootstrap4 and various other web scripting technologies</p>
-         <br>
-          <h5>Click on the image to see the full website</h5>
-        </div>
-
-        <!--<div class="row" data-aos="fade-up">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-app">App</li>
-              <li data-filter=".filter-card">Card</li>
-              <li data-filter=".filter-web">Web</li>
-            </ul>
-          </div>
-        </div>-->
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
-
-
-
-          <a href="https://samuelsaji.github.io/fjmhsswebsite/">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/fjmhssweb1.png" class="img-fluid" alt="">            
-            </div>
-          </div>
-          </a>
-
-          <a href="https://samuelsaji.github.io/fjmhsswebsite/">
-            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-              <div class="portfolio-wrap">
-                <img src="assets/img/portfolio/fjmhssweb2.png" class="img-fluid" alt="">            
-              </div>
-            </div>
-          </a>
-  
-          <a href="https://samuelsaji.github.io/fjmhsswebsite/">
-              <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                <div class="portfolio-wrap">
-                  <img src="assets/img/portfolio/fjmhssweb3.png" class="img-fluid" alt="">            
-                </div>
-              </div>
-          </a>
-    
-          <a href="https://samuelsaji.github.io/haiernew/">
-            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-              <div class="portfolio-wrap">
-                <img src="assets/img/portfolio/haierweb1.png" class="img-fluid" alt="">            
-              </div>
-            </div>
-          </a>
-
-
-          <a href="https://samuelsaji.github.io/haiernew/">
-            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-              <div class="portfolio-wrap">
-                <img src="assets/img/portfolio/haierweb2.png" class="img-fluid" alt="">            
-              </div>
-            </div>
-          </a>
-          <a href="https://samuelsaji.github.io/haiernew/">
-            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-              <div class="portfolio-wrap">
-                <img src="assets/img/portfolio/haierweb3.png" class="img-fluid" alt="">            
-              </div>
-            </div>
-          </a>
-
-
-          
-
-          <a href="https://samuelsaji.github.io/divinefuels1/">
-            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-              <div class="portfolio-wrap">
-                <img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">            
-              </div>
-            </div>
-          </a>
-
-          <a href="https://samuelsaji.github.io/divinefuels1/">
-            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-              <div class="portfolio-wrap">
-                <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">            
-              </div>
-            </div>
-          </a>
-
-          <a href="https://samuelsaji.github.io/divinefuels1/">
-            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-              <div class="portfolio-wrap">
-                <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">            
-              </div>
-            </div>
-          </a>       
-
-        </div>
-
-      </div>
-    </section><!-- End Portfolio Section -->
-
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Services</h2>
-          <p>Unlock the full potential of your digital presence with our comprehensive design services. From concept to execution, we are dedicated to delivering exceptional design solutions that make an impact."
-
-</p>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-4 col-md-6 icon-box" data-aos="fade-up">
-            <div class="icon"><i class="icofont-computer"></i></div>
-            <h4 class="title">Web Design</h4>
-            <p class="description">We provide digital experience services to startups and small businesses to looking for a partner of their digital media, design & development.</p>
-          </div>
-          <div class="col-lg-4 col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
-            <div class="icon"><i class="icofont-chart-bar-graph"></i></div>
-            <h4 class="title">E-commerce</h4>
-            <p class="description">Experience the power of e-commerce done right. Let us transform your online business into a thriving digital marketplace, empowering you to reach a global audience.</p>
-          </div>
-          <div class="col-lg-4 col-md-6 icon-box" data-aos="fade-up" data-aos-delay="200">
-            <div class="icon"><i class="icofont-earth"></i></div>
-            <h4 class="title">SMM</h4>
-            <p class="description">Social Media Marketing. Let us take your brand to new heights, increase your online visibility, and connect with your target audience in meaningful ways.</p>
-          </div>
-          <!--<div class="col-lg-4 col-md-6 icon-box" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon"><i class="icofont-image"></i></div>
-            <h4 class="title"><a href="">Magni Dolores</a></h4>
-            <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-          </div>
-          <div class="col-lg-4 col-md-6 icon-box" data-aos="fade-up" data-aos-delay="400">
-            <div class="icon"><i class="icofont-settings"></i></div>
-            <h4 class="title"><a href="">Nemo Enim</a></h4>
-            <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
-          </div>
-          <div class="col-lg-4 col-md-6 icon-box" data-aos="fade-up" data-aos-delay="500">
-            <div class="icon"><i class="icofont-tasks-alt"></i></div>
-            <h4 class="title"><a href="">Eiusmod Tempor</a></h4>
-            <p class="description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>
-          </div>-->
-        </div>
-
-      </div>
-    </section><!-- End Services Section -->
-
-    <!-- ======= Testimonials Section ======= -->
-    <section id="testimonials" class="testimonials section-bg">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Rates</h2>
-          <p>Website are mainly classified into two Static websites & Dynamic websites. As we are concentrating on developing Static web pages our websited are divided into three types Basic, Standard, & Premium. Prices and Details of each type of website is classified below.</p>
-        </div>
-
-        <div class="owl-carousel testimonials-carousel">
-
-          <div class="testimonial-item" data-aos="fade-up">
-            <p>
-              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-              Basic webpage include Domain & Hosting, 2-3 pages, basic SEO, Responsive / Mobile-friendly,  Social Media Linking, free Support for 1 year
-              <br>
-              
-              <br>
-
-              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-            </p>
-            <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-            <h3>Basic Website</h3>
-            <h4>Rs 9,999</h4>
-          </div>
-
-          <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100">
-            <p>
-              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-              Standard webpage include Domain & Hosting, 5-7 pages, Standard SEO, Responsive / Mobile-friendly,  Social Media Linking, free Support for 1 year, Location & Map access, Editable, Whats app chat linking, and Contact form.
-              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-            </p>
-            <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-            <h3>Standard website</h3>
-            <h4>Rs 12,999</h4>
-          </div>
-
-          <div class="testimonial-item" data-aos="fade-up" data-aos-delay="200">
-            <p>
-              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-              Premium webpage include Domain & Hosting, 8-10 pages, the best SEO service, Responsive / Mobile-friendly,  Social Media Linking, Location & map access, free Support for 5 year, Whats app chat linking, Contact form, Editable.
-              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-            </p>
-            <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-            <h3>Premium Website</h3>
-            <h4>Rs 22,999</h4>
-          </div>
-
-         <!--- <div class="testimonial-item" data-aos="fade-up" data-aos-delay="300">
-            <p>
-              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-              Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-            </p>
-            <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-            <h3>Matt Brandon</h3>
-            <h4>Freelancer</h4>
-          </div>
-
-          <div class="testimonial-item" data-aos="fade-up" data-aos-delay="400">
-            <p>
-              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-              Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
-              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-            </p>
-            <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-            <h3>John Larson</h3>
-            <h4>Entrepreneur</h4>
-          </div>-->
-
-        </div>
-
-      </div>
-    </section><!-- End Testimonials Section -->
-
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-      <div class="container">
-        <div class="section-title">
-          <h2>Contact</h2>
-          <p>Interested in discussing your project further?<br>
-            Feel free to reach out to me via phone or WhatsApp.
-                    </p>
-        </div>
-        <div class="row" data-aos="fade-in">
-          <div class="col-lg-12">
-            <div class="info d-flex flex-wrap justify-content-between">
-              <div class="col-md-4 col-sm-6 mb-4">
-                <a href="mailto:kp.samuelsaji@gmail.com" style="color: #272829;">
-                  <div class="email">
-                    <i class="icofont-envelope"></i>
-                    <p style="font-weight: bold;">kp.samuelsaji@gmail.com</p>
-                  </div>
-                </a>
-              </div>
-              <div class="col-md-4 col-sm-6 mb-4">
-                <a href="tel:9544785564" style="color: #272829;">
-                  <div class="phone">
-                    <i class="icofont-phone"></i>
-                    <p style="font-weight: bold;">+91 9544785564</p>
-                  </div>
-                </a>
-              </div>
-              <div class="col-md-4 col-sm-6 mb-4">
-                <a href="https://wa.me/qr/ZQVDBZUS2QKJP1" style="color: #272829;">
-                  <div class="phone">
-                    <i class="icofont-brand-whatsapp"></i>
-                    <p style="font-weight: bold;">+91 9544785564</p>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    
-    
-    
-    
-    
-    <!--  <section id="contact" class="contact">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Contact</h2>
-          <p>Want to get in touch? 
-            <br>
-            Find me on phone 
-            or in email or just fill the form below and send it to me</p>
-        </div>
-
-        <div class="row" data-aos="fade-in">
-
-          <div class="col-lg-5 d-flex align-items-stretch">
-            <div class="info">
-          <a href="https://g.page/Samuel-Saji?share" style="color: #272829;">
-              <div class="address">
-                <i class="icofont-google-map"></i>
-                <h4>Location:</h4>
-                <p>Kuzhiyakudiyil H, Puthuppady P.O, Muvattupuzha</p>
-              </div>
-            </a> 
-
-            <a href="mailto:kp.samuelsaji@gmail.com" style="color: #272829;">
-              <div class="email">
-                <i class="icofont-envelope"></i>
-                <h4>Email:</h4>
-                <p >kp.samuelsaji@gmail.com</p>
-              </div>
-            </a>  
-            <a href="tel:9544785564" style="color: #272829;">
-              <div class="phone">
-                <i class="icofont-phone"></i>
-                <h4>Call:</h4>
-                <p >+91 9544785564</p>
-              </div>
-            </a>
-            <a href="https://wa.me/qr/ZQVDBZUS2QKJP1" style="color: #272829;">
-              <div class="phone">
-                <i class="icofont-brand-whatsapp"></i>
-                <h4>Whatsapp:</h4>
-                <p >+91 9544785564</p>
-              </div>
-            </a>
-
-              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3929.1439122833485!2d76.6044587!3d10.0049692!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb7fe2e64d757481!2sWeb%20designer%20and%20developer!5e0!3m2!1sen!2sin!4v1618223525372!5m2!1sen!2sin" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
-            </div>
-
-          </div>
-
-        old code with form <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">-->
-          
-          
-            <!-- <form action="https://formsubmit.co/d7cc7fbec7e6e303a5f93162b530334b" method="post" class="php-email-form">
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Your Name</label>
-                  <input type="text" name="name" required class="form-control rounded" id="name" />
-                 
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Your Phone no.</label>
-                  <input type="number" class="form-control rounded" required name="Phone Number" id="phone" />
-                 
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="name">Your Email</label>
-                <input type="email" class="form-control" required name="email" id="email" />
-                
-              </div>
-              <div class="form-group">
-                <label>Message</label>
-                <textarea class="form-control rounded" name="Message" rows="15" required></textarea>
-              </div>            
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>-->
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Contact Section -->
-
-  </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
-    <div class="container">
-      
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/ -->
-        Designed by <a href="https://samuelsaji.github.io/">Samuel</a>
-      </div>
-    </div>
-  </footer><!-- End  Footer -->
-
-  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/jquery/jquery.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
-  <script src="assets/vendor/counterup/counterup.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/venobox/venobox.min.js"></script>
-  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
-  <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
 <script>
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzkswa1WRRUHFJCZnXobsWQ523hHsS---K_tKW9VCnqVX78Nv_WyHAFWNR_tAkJG-ws/exec'
-  const form = document.forms['google-sheet']
+(function () {
+  var TOPICS = ["Industrial software", "Starting out", "Building with others"];
+  var NOW = [
+    { name: "Codescape Innovations", role: "Founder & CEO", href: "https://thecodescape.in",
+      desc: "A digitalisation partner for enterprises, from ERP-connected systems to e-commerce store building." },
+    { name: "Edge64", role: "Co-founder & COO", href: "https://edge64.com",
+      desc: "AI digital twins and virtual commissioning for industrial automation." }
+  ];
 
-  form.addEventListener('submit', e => {
-    e.preventDefault()
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(response => alert("Thanks for Contacting us..! We Will Contact You Soon..."))
-      .catch(error => console.error('Error!', error.message))
-  })
-</script>                    
+  var ENTRIES = [
+    { type: "note", slug: "this-site", sort: "2026-11-06", when: "6 Nov 2026",
+      text: "Started this site today. The plan is to write down what I learn while building, in case it saves someone else some time." },
+    { type: "essay", slug: "five-weeks-of-building-with-others", sort: "2026-11-05", when: "5 Nov 2026", topic: "Building with others",
+      title: "What five weeks of building with others showed me",
+      sub: "Notes from the first Nights & Weekends cohort with TinkerHub.",
+      body: [
+        "The first Nights & Weekends cohort with TinkerHub wrapped up this week. The organisers received more than 150 applications and picked around 50 builders. Five weeks later, people had prototypes, MVPs, early customers and, across a few teams, about $6,000 in revenue.",
+        "The revenue is not what I took away. The useful part was being pushed to talk to real customers earlier than felt comfortable, and watching other people rethink products they were sure about.",
+        "Building alone is slower than it needs to be. A group that asks uncomfortable questions every week is hard to replicate by yourself.",
+        "Thanks to TinkerHub and TinkerSpace Kochi for the room, and to the mentors who gave honest feedback."
+      ] },
+    { type: "note", slug: "cohort-done", sort: "2026-11-05", when: "5 Nov 2026",
+      text: "The first Nights & Weekends cohort wrapped up. Writing up what I learned from it." },
+    { type: "essay", slug: "testing-plc-logic-before-commissioning", sort: "2026-10-20", when: "Oct 2026", topic: "Industrial software",
+      title: "What testing PLC logic before commissioning showed us",
+      sub: "Findings from a digital twin project, including what it cannot catch.",
+      body: [
+        "On one recent project we built a digital twin of an industrial process so the team could test PLC logic before commissioning. We expect it to catch roughly 92% of the PLC errors that would otherwise surface on site. That figure is our estimate for this project, not a general rule.",
+        "The surprise was what else changed. The client could demo the SCADA screens running against the twin, so their customer understood the machine before it was installed. Last-minute change requests dropped by about 85%. Developers also worked with a visual of the process plant in front of them, and software work finished 24 to 28% faster.",
+        "It does not catch everything. Delays from wiring changes and network errors sit outside what the twin models today, so commissioning still needs time for them.",
+        "My read is that showing people the machine early moves disagreements to a stage where they are cheap to fix. Many late changes come from people seeing the thing for the first time, not from engineering mistakes."
+      ] },
+    { type: "essay", slug: "why-stock-never-matches-the-shelf", sort: "2026-10-16", when: "Oct 2026", topic: "Industrial software",
+      title: "Why the stock in the system never matches the shelf",
+      sub: "What a year inside a factory store room taught me about the order of steps.",
+      body: [
+        "At one factory store I worked with, material requests were handwritten. Items were issued first and the ERP was updated later. That order is the whole problem. The system always lags the shelf, so the numbers are wrong from the moment anyone walks out with a part.",
+        "The fix was a change in sequence, not smarter software. Staff request on a screen, the store in-charge approves, the item is scanned out with a QR code, and the stock record updates at that moment. After that, material issue was over 70% faster and the paper slips disappeared.",
+        "Three things I took from it. Record before you hand over, not after. Put the approval at the point of issue, where the person who knows is already standing. And keep the change small enough that the store team can adopt it quickly, because a store runs on habit.",
+        "If your store still runs on registers or WhatsApp requests, start by writing down the order of steps from request to issue. Most mismatches show up right there."
+      ] },
+    { type: "essay", slug: "what-my-first-client-taught-me", sort: "2026-08-25", when: "Aug 2026", topic: "Starting out",
+      title: "What my first client taught me",
+      sub: "Seven years of working with the people who trusted a school student.",
+      body: [
+        "Seven years ago I was in Plus One, learning how business worked as I went. Listermedica Healthcare trusted me with their online presence. I made mistakes and they let me.",
+        "For years we worked over screens and calls. This year I finally met Mr. Joby Babu in person and thanked him across a table.",
+        "What stays with me is how much client work runs on trust that builds slowly. A good early client teaches you how to serve someone, which is a different skill from delivering a project. If you are starting out, the clients who give you room to learn are worth a lot."
+      ] }
+  ];
 
+  var USER = null, dirty = false, editing = null, flash = "";
+  function topics() { var t = [], i; for (i = 0; i < ENTRIES.length; i++) if (ENTRIES[i].topic && t.indexOf(ENTRIES[i].topic) < 0) t.push(ENTRIES[i].topic); return t; }
+  function canEdit() { try { return !!(USER && USER.canEdit()); } catch (x) { return false; } }
+  function slugify(t) { return String(t).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "post"; }
+  function fmtDate(iso) { var d = new Date(iso + "T00:00:00"); return d.getDate() + " " + d.toLocaleString("en-GB", { month: "short" }) + " " + d.getFullYear(); }
+  function todayIso() { var d = new Date(), m = d.getMonth() + 1, dd = d.getDate(); return d.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (dd < 10 ? "0" : "") + dd; }
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function readTime(e) { var w = e.body.join(" ").split(/\s+/).length; return Math.max(1, Math.round(w / 200)) + " min read"; }
+  function sorted() { return ENTRIES.slice().sort(function (a, b) { return a.sort < b.sort ? 1 : a.sort > b.sort ? -1 : 0; }); }
+
+  var SW = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
+  var ARTS = {
+    cohort: '<svg viewBox="0 0 96 72" ' + SW + '><g class="bob"><circle class="f" cx="24" cy="38" r="8"/><path d="M12 62c0-8 5-13 12-13s12 5 12 13"/></g><g class="bob2"><circle class="f" cx="48" cy="34" r="9"/><path d="M35 62c0-9 6-14 13-14s13 5 13 14"/></g><g class="bob"><circle class="f" cx="72" cy="38" r="8"/><path d="M60 62c0-8 5-13 12-13s12 5 12 13"/></g><path class="ping" d="M58 8h24a4 4 0 014 4v8a4 4 0 01-4 4h-14l-6 6v-6h-4a4 4 0 01-4-4v-8a4 4 0 014-4z"/></svg>',
+    twin: '<svg viewBox="0 0 96 72" ' + SW + '><rect class="f" x="8" y="22" width="34" height="34" rx="4"/><circle cx="25" cy="39" r="7"/><path d="M25 32v-3M25 49v3M18 39h-3M35 39h3"/><g class="slide"><rect x="54" y="22" width="34" height="34" rx="4" stroke-dasharray="4 4"/><circle class="ping" cx="71" cy="39" r="4" fill="currentColor"/></g><path d="M44 39h8M49 35l4 4-4 4"/></svg>',
+    shelf: '<svg viewBox="0 0 96 72" ' + SW + '><path d="M8 30h80M8 60h80M12 30v30M84 30v30"/><rect class="f" x="18" y="14" width="16" height="16" rx="2"/><rect class="f" x="38" y="20" width="12" height="10" rx="2"/><g class="slide"><rect class="f" x="56" y="16" width="16" height="14" rx="2"/></g><rect class="f" x="20" y="44" width="14" height="16" rx="2"/><rect class="f" x="52" y="48" width="18" height="12" rx="2"/><path d="M42 50l4 4 8-9"/></svg>',
+    client: '<svg viewBox="0 0 96 72" ' + SW + '><path d="M30 64h36"/><g class="sway"><path d="M48 62V30"/><path class="f" d="M48 44c-12 0-18-8-18-16 12 0 18 6 18 16z"/><path class="f" d="M48 36c10 0 16-7 16-14-10 0-16 5-16 14z"/></g><circle class="ping" cx="74" cy="14" r="3" fill="currentColor"/></svg>',
+    note: '<svg viewBox="0 0 96 72" ' + SW + '><rect class="f" x="22" y="10" width="52" height="52" rx="4"/><path d="M32 26h32M32 38h32"/><path class="write" d="M32 50h24"/><g class="bob"><path d="M70 40l14-14 6 6-14 14-8 2z"/></g></svg>'
+  };
+  var ART_FOR = { "five-weeks-of-building-with-others": "cohort", "testing-plc-logic-before-commissioning": "twin",
+    "why-stock-never-matches-the-shelf": "shelf", "what-my-first-client-taught-me": "client" };
+
+  function itemHtml(e) {
+    if (e.type === "note") {
+      return '<div class="item"><div class="txt"><p style="color:var(--fg)">' + esc(e.text) + '</p><div class="meta">' + esc(e.when) + '<i>·</i>Note</div></div><div class="art" aria-hidden="true">' + (e.art === "none" ? "" : (ARTS[e.art] || ARTS.note)) + '</div></div>';
+    }
+    return '<a class="item" href="#post-' + e.slug + '"><div class="txt"><h3>' + esc(e.title) + '</h3><p>' + esc(e.sub) + '</p>' +
+      '<div class="meta">' + esc(e.when) + '<i>·</i>' + esc(e.topic) + '<i>·</i>' + readTime(e) + '</div></div><div class="art" aria-hidden="true">' + (ARTS[e.art || ART_FOR[e.slug]] || "") + '</div></a>';
+  }
+
+  var MAIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
+
+  function newsHtml() {
+    return '<section class="news"><h2>' + MAIL + 'Letters, occasionally.</h2>' +
+      '<p class="copy">New posts and notes, straight to your inbox.</p>' +
+      '<form id="nl" novalidate><label for="nl-email">Email address</label>' +
+      '<input id="nl-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>' +
+      '<button type="submit">Subscribe</button><div class="msg" id="nl-msg" role="status"></div></form>' +
+      '<p class="fine">Unsubscribe whenever you like.</p></section>';
+  }
+  document.getElementById("side").innerHTML = newsHtml();
+
+  document.addEventListener("submit", function (ev) {
+    var form = ev.target;
+    if (!form || form.id !== "nl") return;
+    ev.preventDefault();
+    var msg = document.getElementById("nl-msg"), btn = form.querySelector("button");
+    var email = form.email.value.trim().toLowerCase();
+    if (!/^[a-z0-9_.+~-]+@[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(email)) { msg.textContent = "That email does not look right."; return; }
+    btn.disabled = true; msg.textContent = "Adding you…";
+    var done = function () { form.innerHTML = '<p class="copy" style="margin:0">Thanks. You are on the list.</p>'; };
+    var fail = function () {
+      btn.disabled = false;
+      msg.innerHTML = 'Sign-up is not open on this page yet. For now, follow along on <a href="https://www.linkedin.com/in/samuel-saji/" target="_blank" rel="noopener">LinkedIn</a>.';
+    };
+    var cl = window.claude;
+    if (!cl || !cl.use) { fail(); return; }
+    cl.use("db").then(function (db) {
+      if (!db) { fail(); return; }
+      return db.doc("subscribers/" + email).set({ email: email, at: new Date().toISOString() }).then(done);
+    }).catch(fail);
+  });
+
+  var filter = "all";
+
+  function viewHome() {
+    var latest = sorted().slice(0, 4).map(itemHtml).join("");
+    var now = NOW.map(function (n) {
+      return '<a class="card" href="' + n.href + '" target="_blank" rel="noopener"><h3>' + esc(n.name) + ' ↗</h3><div class="role">' + esc(n.role) + '</div><p>' + esc(n.desc) + '</p></a>';
+    }).join("");
+    return '<div class="stack">' +
+      '<section class="intro"><div class="who"><img class="avatar" src="avatar.webp" alt="Samuel Saji" width="112" height="112"><div><h1>Hey, I\'m Samuel.</h1><div class="sub">AI &amp; software for industry</div></div></div>' +
+      '<p>I build AI and software for industry, and I write down what I find along the way: what worked, what did not, and what I would tell someone starting out.</p>' +
+      '<p class="small">Not an expert. I am early in all of this and figuring it out as I go, so read it as notes from someone in the middle of the journey. Everything here is written by me, not by AI.</p>' +
+      '<div class="links"><span>Kochi, Kerala</span><a href="https://www.linkedin.com/in/samuel-saji/" target="_blank" rel="noopener">LinkedIn ↗</a></div></section>' +
+      '<section><div class="label"><span>What I\'m building now</span></div><div class="cards">' + now + '</div></section>' +
+      '<section><div class="label"><span>Latest writing</span><a href="#writing">All writing</a></div>' + latest + '</section>' +
+      '</div>';
+  }
+
+  function viewWriting() {
+    var items = sorted().filter(function (e) {
+      if (filter === "all") return true;
+      if (filter === "note") return e.type === "note";
+      return e.topic === filter;
+    }).map(itemHtml).join("");
+    function chip(k, l) { return '<button class="chip" type="button" data-filter="' + esc(k) + '" aria-pressed="' + (filter === k) + '">' + esc(l) + '</button>'; }
+    var chips = chip("all", "All") + topics().map(function (t) { return chip(t, t); }).join("") + chip("note", "Notes");
+    return '<h1 class="page-title">Writing</h1><p class="page-lede">Longer essays when something is worth explaining, and short notes in between. Take what is useful.</p>' +
+      '<div class="chips">' + chips + '</div>' + items;
+  }
+
+  function viewPost(slug) {
+    var all = sorted().filter(function (e) { return e.type === "essay"; });
+    var e = all.filter(function (x) { return x.slug === slug; })[0];
+    if (!e) return null;
+    var others = all.filter(function (x) { return x.slug !== slug; }).slice(0, 2).map(itemHtml).join("");
+    return '<article class="post"><a class="back" href="#writing">← All writing</a><h1>' + esc(e.title) + '</h1>' +
+      '<div class="meta">' + esc(e.when) + ' · ' + esc(e.topic) + ' · ' + readTime(e) + '</div><p class="lede">' + esc(e.sub) + '</p>' +
+      '<div class="body">' + e.body.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join("") + '</div>' +
+      '<div class="more-posts"><div class="label"><span>More writing</span></div>' + others + '</div>' +
+      '</article>';
+  }
+
+  function viewAbout() {
+    return '<div class="stack"><section class="prose"><h1>About</h1>' +
+      '<p>I am Samuel, based in Kochi, Kerala. I started taking on client work while I was still at school and have been building software since. These days I run Codescape, a software company, and I am a co-founder of Edge64, which works on digital twins for industrial automation.</p>' +
+      '<p>I finished a BTech in Mechanical Engineering at MACE, Kothamangalam, in 2026.</p>' +
+      '<p>I am not an expert in any of this. I am just starting out and working things out as I go, and I write it down as I learn it, including the parts I get wrong.</p>' +
+      '<p>Everything on this site is written by me. None of it is written by AI.</p>' +
+      '<p>This is not a company site. If something here helped, or you think I got it wrong, say hello on <a href="https://www.linkedin.com/in/samuel-saji/" target="_blank" rel="noopener" style="color:var(--fg);text-decoration:underline">LinkedIn</a>.</p></section>' +
+      '</div>';
+  }
+
+  var ART_OPTS = [["note", "Notepad"], ["cohort", "People"], ["twin", "Machine"], ["shelf", "Shelf"], ["client", "Seedling"], ["none", "None"]];
+
+  function viewAdmin() {
+    if (!canEdit()) {
+      return '<div class="adm"><h1>Admin</h1><p class="lede">This page is only for the site owner. If that is you, open the page while signed in to claude.ai.</p></div>';
+    }
+    var e = editing === "new" ? { type: "essay", date: todayIso(), art: "note" } : (ENTRIES.filter(function (x) { return x.slug === editing; })[0] || null);
+    if (editing && !e) editing = null;
+    var rows = ENTRIES.slice().sort(function (a, b) { return a.sort < b.sort ? 1 : -1; }).map(function (x) {
+      var label = x.type === "note" ? x.text : x.title;
+      var asking = flash === "del:" + x.slug;
+      return '<div class="arow"><div class="t"><b>' + esc(label) + '</b><span>' + (x.type === "note" ? "Note" : "Essay") + ' · ' + esc(x.when) + '</span></div><div class="btns">' +
+        (asking ? '<button class="b d" type="button" data-act="del-yes" data-slug="' + esc(x.slug) + '">Delete for good</button><button class="b" type="button" data-act="del-no">Keep</button>'
+                : '<button class="b" type="button" data-act="edit" data-slug="' + esc(x.slug) + '">Edit</button><button class="b d" type="button" data-act="del" data-slug="' + esc(x.slug) + '">Delete</button>') +
+        '</div></div>';
+    }).join("") || '<p class="hint">No posts yet.</p>';
+    var form = "";
+    if (e) {
+      var isNote = e.type === "note";
+      var tl = topics().map(function (t) { return '<option value="' + esc(t) + '">'; }).join("");
+      form = '<form id="pf" data-slug="' + esc(e.slug || "") + '">' +
+        '<div class="two"><label>Type<select name="type"><option value="essay"' + (!isNote ? " selected" : "") + '>Essay</option><option value="note"' + (isNote ? " selected" : "") + '>Short note</option></select></label>' +
+        '<label>Date<input type="date" name="date" value="' + esc(e.date || e.sort || todayIso()) + '" required></label></div>' +
+        '<label>Title (essays)<input name="title" value="' + esc(e.title || "") + '" placeholder="What I learned about…"></label>' +
+        '<label>One-line summary (essays)<input name="sub" value="' + esc(e.sub || "") + '"></label>' +
+        '<div class="two"><label>Topic (essays)<input name="topic" list="tl" value="' + esc(e.topic || "") + '" placeholder="Industrial software"><datalist id="tl">' + tl + '</datalist></label>' +
+        '<label>Little drawing<select name="art">' + ART_OPTS.map(function (o) { return '<option value="' + o[0] + '"' + ((e.art || "note") === o[0] ? " selected" : "") + '>' + o[1] + '</option>'; }).join("") + '</select></label></div>' +
+        '<label>' + (isNote ? "Note text" : "Body. Leave a blank line between paragraphs.") + '<textarea name="body" placeholder="Write here…">' + esc(isNote ? (e.text || "") : (e.body || []).join("\n\n")) + '</textarea></label>' +
+        '<div class="btns"><button class="b p" type="submit">Save post</button><button class="b" type="button" data-act="cancel">Cancel</button></div>' +
+        '<p class="hint" style="margin:0">Saving puts it in your draft list. Nothing is public until you press Publish.</p></form>';
+    }
+    return '<div class="adm"><h1>Admin</h1><p class="lede">Write, edit and delete posts here. Only you can see this page.</p>' +
+      (e ? '' : '<div class="btns"><button class="b p" type="button" data-act="new">New post</button><a class="b" href="#">View site</a></div>') +
+      form + (e ? '' : '<h2>Your posts</h2>' + rows) +
+      '<h2>Newsletter signups</h2><div class="subs" id="subs">Loading…</div>' +
+      '<div class="bar" id="pubbar"' + (dirty ? '' : ' hidden') + '><span>You have unpublished changes.</span><button class="b p" type="button" data-act="publish" id="pubbtn">Publish</button></div>' +
+      '<p class="hint" id="pubmsg" role="status">' + esc(flashMsg) + '</p></div>';
+  }
+  var flashMsg = "";
+
+  function loadSubs() {
+    var box = document.getElementById("subs"); if (!box || !window.claude) return;
+    window.claude.use("db").then(function (db) {
+      if (!db) { box.textContent = "Signups are not available in this view."; return; }
+      return db.collection("subscribers").orderBy("at", "desc").get().then(function (snap) {
+        var list = snap.docs.map(function (d) { return d.data().email; });
+        box.innerHTML = list.length ? '<b style="color:var(--fg)">' + list.length + ' subscriber' + (list.length === 1 ? '' : 's') + '</b><br>' + list.map(esc).join("<br>") : "No signups yet.";
+      });
+    }).catch(function () { box.textContent = "Could not load signups."; });
+  }
+
+  function publishNow() {
+    var btn = document.getElementById("pubbtn"), msg = document.getElementById("pubmsg");
+    btn.disabled = true; msg.textContent = "Publishing…";
+    var body = JSON.stringify(ENTRIES, null, 1);
+    var cl = window.claude;
+    (cl && cl.use ? cl.use("artifact") : Promise.resolve(null)).then(function (a) {
+      if (!a) throw { code: "none" };
+      return a.publish({ "posts.json": { content: body, contentType: "application/json" } });
+    }).then(function () {
+      dirty = false; flashMsg = "Published. The live site now shows these posts."; render();
+    }).catch(function (err) {
+      btn.disabled = false;
+      var c = err && err.code;
+      flashMsg = c === "conflict" ? "The page was updated elsewhere, so it is reloading. Make your change again." :
+        "Could not publish from this page (" + (c || "error") + "). Your changes are kept here. Tell Claude and it will publish them for you.";
+      msg.textContent = flashMsg;
+    });
+  }
+
+  document.addEventListener("submit", function (ev) {
+    var f = ev.target; if (!f || f.id !== "pf") return;
+    ev.preventDefault();
+    var v = function (n) { return (f.elements[n].value || "").trim(); };
+    var type = v("type"), date = v("date"), art = v("art"), raw = f.elements.body.value.trim();
+    var old = ENTRIES.filter(function (x) { return x.slug === f.getAttribute("data-slug"); })[0];
+    var e;
+    if (type === "note") {
+      if (!raw) { flashMsg = "Write something for the note first."; document.getElementById("pubmsg").textContent = flashMsg; return; }
+      e = { type: "note", slug: (old && old.type === "note") ? old.slug : "note-" + Date.now().toString(36), sort: date, date: date, when: fmtDate(date), text: raw, art: art };
+    } else {
+      var title = v("title");
+      if (!title || !raw) { flashMsg = "An essay needs a title and a body."; document.getElementById("pubmsg").textContent = flashMsg; return; }
+      var slug = (old && old.type === "essay") ? old.slug : slugify(title);
+      if (!old) { var base = slug, n = 2; while (ENTRIES.some(function (x) { return x.slug === slug; })) slug = base + "-" + n++; }
+      e = { type: "essay", slug: slug, sort: date, date: date, when: fmtDate(date), topic: v("topic") || "General", title: title, sub: v("sub"),
+            body: raw.split(/\n\s*\n/).map(function (x) { return x.trim(); }).filter(Boolean), art: art };
+    }
+    if (old) ENTRIES[ENTRIES.indexOf(old)] = e; else ENTRIES.push(e);
+    dirty = true; editing = null; flashMsg = "Saved to drafts. Press Publish to make it public."; render();
+  });
+
+  document.addEventListener("click", function (ev) {
+    var t = ev.target.closest ? ev.target.closest("[data-act]") : null; if (!t) return;
+    var act = t.getAttribute("data-act"), slug = t.getAttribute("data-slug");
+    if (act === "new") { editing = "new"; flashMsg = ""; render(); }
+    else if (act === "edit") { editing = slug; flashMsg = ""; render(); }
+    else if (act === "cancel") { editing = null; render(); }
+    else if (act === "del") { flash = "del:" + slug; render(); }
+    else if (act === "del-no") { flash = ""; render(); }
+    else if (act === "del-yes") { ENTRIES = ENTRIES.filter(function (x) { return x.slug !== slug; }); dirty = true; flash = ""; flashMsg = "Deleted from drafts. Press Publish to make it final."; render(); }
+    else if (act === "publish") publishNow();
+  });
+
+  document.addEventListener("change", function (ev) {
+    var f = ev.target && ev.target.form; if (!f || f.id !== "pf" || ev.target.name !== "type") return;
+    var lab = f.elements.body.parentNode; lab.firstChild.nodeValue = ev.target.value === "note" ? "Note text" : "Body. Leave a blank line between paragraphs.";
+  });
+
+  var app = document.getElementById("app");
+  function render() {
+    var h = location.hash.replace(/^#/, ""), html = null, nav = "home";
+    if (h === "writing") { html = viewWriting(); nav = "writing"; }
+    else if (h === "about") { html = viewAbout(); nav = "about"; }
+    else if (h === "admin") { html = viewAdmin(); nav = "admin"; }
+    else if (h.indexOf("post-") === 0) { html = viewPost(h.slice(5)); nav = "writing"; }
+    if (html === null) { html = viewHome(); nav = "home"; }
+    app.innerHTML = html;
+    if (h === "admin" && canEdit()) loadSubs();
+    document.getElementById("side").style.display = (h === "admin" || !window.claude) ? "none" : "";
+    var al = document.getElementById("adminlink"); if (al) al.style.display = canEdit() ? "" : "none";
+    var links = document.querySelectorAll("[data-nav]");
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].getAttribute("data-nav") === nav) links[i].setAttribute("aria-current", "page"); else links[i].removeAttribute("aria-current");
+    }
+  }
+  window.addEventListener("hashchange", function () { render(); window.scrollTo(0, 0); });
+  document.addEventListener("click", function (ev) {
+    var t = ev.target; if (!t.closest) return;
+    var f = t.closest("[data-filter]");
+    if (f) { filter = f.getAttribute("data-filter"); render(); return; }
+    if (t.closest('a[href="#writing"]')) filter = "all";
+  });
+  var GA_ID = "";
+  if (GA_ID) {
+    var gs = document.createElement("script"); gs.async = true; gs.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID; document.head.appendChild(gs);
+    window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
+    gtag("js", new Date()); gtag("config", GA_ID, { send_page_view: false });
+    var sendPV = function () { gtag("event", "page_view", { page_path: "/" + location.hash, page_location: location.href, page_title: document.title }); };
+    sendPV(); window.addEventListener("hashchange", sendPV);
+  }
+  render();
+  fetch("posts.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+    if (Array.isArray(j)) { ENTRIES = j; if (!dirty) render(); }
+  }).catch(function () {});
+  if (window.claude && window.claude.use) {
+    window.claude.use("user").then(function (u) { USER = u; render(); }).catch(function () {});
+  }
+})();
+</script>
 
 </body>
-
 </html>
