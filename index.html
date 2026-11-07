@@ -2,6 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-M95J7NX2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
 <title>Samuel Saji</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Notes and findings from building software for industry, written down for anyone it might help.">
@@ -463,14 +469,6 @@ footer .fl { display: flex; gap: 16px; }
     if (f) { filter = f.getAttribute("data-filter"); render(); return; }
     if (t.closest('a[href="#writing"]')) filter = "all";
   });
-  var GA_ID = "";
-  if (GA_ID) {
-    var gs = document.createElement("script"); gs.async = true; gs.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID; document.head.appendChild(gs);
-    window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
-    gtag("js", new Date()); gtag("config", GA_ID, { send_page_view: false });
-    var sendPV = function () { gtag("event", "page_view", { page_path: "/" + location.hash, page_location: location.href, page_title: document.title }); };
-    sendPV(); window.addEventListener("hashchange", sendPV);
-  }
   render();
   fetch("posts.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
     if (Array.isArray(j)) { ENTRIES = j; if (!dirty) render(); }
