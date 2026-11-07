@@ -275,14 +275,10 @@ footer .fl { display: flex; gap: 16px; }
     var done = function () { form.innerHTML = '<p class="copy" style="margin:0">Thanks. You are on the list.</p>'; };
     var fail = function () {
       btn.disabled = false;
-      msg.innerHTML = 'Sign-up is not open on this page yet. For now, follow along on <a href="https://www.linkedin.com/in/samuel-saji/" target="_blank" rel="noopener">LinkedIn</a>.';
+      msg.innerHTML = 'Could not sign you up just now. Please try again, or follow along on <a href="https://www.linkedin.com/in/samuel-saji/" target="_blank" rel="noopener">LinkedIn</a>.';
     };
-    var cl = window.claude;
-    if (!cl || !cl.use) { fail(); return; }
-    cl.use("db").then(function (db) {
-      if (!db) { fail(); return; }
-      return db.doc("subscribers/" + email).set({ email: email, at: new Date().toISOString() }).then(done);
-    }).catch(fail);
+    var body = new URLSearchParams(); body.append("entry.661918786", email);
+    fetch("https://docs.google.com/forms/d/e/1FAIpQLSf6CwC1oP-jyKHcoyq39R7tKQwIcCdoS_6pyFDnJW3er835cA/formResponse", { method: "POST", mode: "no-cors", body: body }).then(done).catch(fail);
   });
 
   var filter = "all";
@@ -455,7 +451,7 @@ footer .fl { display: flex; gap: 16px; }
     if (html === null) { html = viewHome(); nav = "home"; }
     app.innerHTML = html;
     if (h === "admin" && canEdit()) loadSubs();
-    document.getElementById("side").style.display = (h === "admin" || !window.claude) ? "none" : "";
+    document.getElementById("side").style.display = h === "admin" ? "none" : "";
     var al = document.getElementById("adminlink"); if (al) al.style.display = canEdit() ? "" : "none";
     var links = document.querySelectorAll("[data-nav]");
     for (var i = 0; i < links.length; i++) {
